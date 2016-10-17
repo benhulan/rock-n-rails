@@ -1,12 +1,12 @@
 class RecordsController < ApplicationController
+  before_action :find_record, only: [:show, :edit, :update]
+
   def index
     # get all the records
     @records = Record.all
   end
 
   def show
-    # find a specific record
-    @record = Record.find(params[:id])
   end
 
   def new
@@ -16,8 +16,21 @@ class RecordsController < ApplicationController
 
   def create
     # creating a record in the database
-    Record.create(record_params)
-    redirect_to('/records')
+    record = Record.create(record_params)
+    redirect_to records_path
+  end
+
+  def edit
+  end
+
+  def update
+    @record.update(record_params)
+    redirect_to @record
+  end
+
+  def destroy
+    Record.destroy(params[:id])
+    redirect_to records_path
   end
 
   private
@@ -25,6 +38,10 @@ class RecordsController < ApplicationController
   # strong parameters for a record
   def record_params
     params.require(:record).permit(:title, :artist, :year, :cover_art, :song_count)
+  end
+
+  def find_record
+    @record = Record.find(params[:id])
   end
 
 end

@@ -5,4 +5,6 @@
   <a href="/records/<%= record.id %>">
     <img src="<%= record.cover_art %>">
   </a>
+  <p><%= link_to "Edit", edit_record_path(record) %></p>
+  <%= button_to "Gone with you!", record, method: :delete, data: { confirm: 'Are you sure?' } %>
 <% end %>
